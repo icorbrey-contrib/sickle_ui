@@ -159,8 +159,8 @@ impl Checkbox {
             )))
             .animated()
             .border_color(AnimatedVals {
-                idle: colors.on(On::SurfaceVariant),
-                hover: colors.on(On::Surface).into(),
+                idle: colors.on(OnColor::SurfaceVariant),
+                hover: colors.on(OnColor::Surface).into(),
                 ..default()
             })
             .copy_from(theme_data.interaction_animation);
@@ -179,7 +179,7 @@ impl Checkbox {
             .switch_target(Checkbox::CHECKMARK)
             .size(Val::Px(theme_spacing.inputs.checkbox.checkmark_size))
             .icon(theme_data.icons.checkmark.with(
-                colors.on(On::Primary),
+                colors.on(OnColor::Primary),
                 theme_spacing.inputs.checkbox.checkmark_size,
             ));
 
@@ -197,8 +197,8 @@ impl Checkbox {
             .sized_font(font)
             .animated()
             .font_color(AnimatedVals {
-                idle: colors.on(On::SurfaceVariant),
-                hover: colors.on(On::Surface).into(),
+                idle: colors.on(OnColor::SurfaceVariant),
+                hover: colors.on(OnColor::Surface).into(),
                 ..default()
             })
             .copy_from(theme_data.interaction_animation);

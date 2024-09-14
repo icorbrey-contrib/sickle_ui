@@ -233,7 +233,7 @@ impl MenuItem {
             .copy_from(theme_data.interaction_animation);
 
         let leading_icon = match leading_icon.is_codepoint() {
-            true => leading_icon.with(colors.on(On::SurfaceVariant), theme_spacing.icons.small),
+            true => leading_icon.with(colors.on(OnColor::SurfaceVariant), theme_spacing.icons.small),
             false => leading_icon,
         };
         style_builder
@@ -246,7 +246,7 @@ impl MenuItem {
             .switch_target(MenuItem::LABEL)
             .margin(UiRect::horizontal(Val::Px(theme_spacing.gaps.small)))
             .sized_font(font.clone())
-            .font_color(colors.on(On::Surface));
+            .font_color(colors.on(OnColor::Surface));
 
         style_builder
             .switch_target(MenuItem::SHORTCUT_CONTAINER)
@@ -258,10 +258,10 @@ impl MenuItem {
         style_builder
             .switch_target(MenuItem::SHORTCUT)
             .sized_font(font)
-            .font_color(colors.on(On::SurfaceVariant));
+            .font_color(colors.on(OnColor::SurfaceVariant));
 
         let trailing_icon = match trailing_icon.is_codepoint() {
-            true => trailing_icon.with(colors.on(On::SurfaceVariant), theme_spacing.icons.small),
+            true => trailing_icon.with(colors.on(OnColor::SurfaceVariant), theme_spacing.icons.small),
             false => trailing_icon,
         };
         style_builder

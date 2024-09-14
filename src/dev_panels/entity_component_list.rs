@@ -158,7 +158,7 @@ impl EntityComponentTag {
         style_builder
             .switch_target(EntityComponentTag::LABEL)
             .sized_font(font)
-            .font_color(colors.on(On::Tertiary));
+            .font_color(colors.on(OnColor::Tertiary));
     }
 
     fn frame() -> impl Bundle {

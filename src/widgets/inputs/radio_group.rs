@@ -262,8 +262,8 @@ impl RadioButton {
             .visibility(Visibility::Inherited)
             .animated()
             .border_color(AnimatedVals {
-                idle: colors.on(On::SurfaceVariant),
-                hover: colors.on(On::Surface).into(),
+                idle: colors.on(OnColor::SurfaceVariant),
+                hover: colors.on(OnColor::Surface).into(),
                 ..default()
             })
             .copy_from(theme_data.interaction_animation);
@@ -281,7 +281,7 @@ impl RadioButton {
         style_builder
             .switch_target(RadioButton::RADIOMARK)
             .size(Val::Px(theme_spacing.inputs.radio_button.radiomark_size))
-            .background_color(colors.on(On::Primary))
+            .background_color(colors.on(OnColor::Primary))
             .border_radius(BorderRadius::all(Val::Px(
                 theme_spacing.inputs.radio_button.radiomark_size,
             )));
@@ -300,8 +300,8 @@ impl RadioButton {
             .sized_font(font)
             .animated()
             .font_color(AnimatedVals {
-                idle: colors.on(On::SurfaceVariant),
-                hover: colors.on(On::Surface).into(),
+                idle: colors.on(OnColor::SurfaceVariant),
+                hover: colors.on(OnColor::Surface).into(),
                 ..default()
             })
             .copy_from(theme_data.interaction_animation);
@@ -320,8 +320,8 @@ impl RadioButton {
             .switch_target(RadioButton::RADIOMARK)
             .animated()
             .background_color(AnimatedVals {
-                idle: colors.on(On::Primary),
-                enter_from: colors.on(On::Surface).into(),
+                idle: colors.on(OnColor::Primary),
+                enter_from: colors.on(OnColor::Surface).into(),
                 ..default()
             })
             .copy_from(theme_data.enter_animation);
@@ -338,7 +338,7 @@ impl RadioButton {
 
         style_builder
             .switch_target(RadioButton::LABEL)
-            .font_color(colors.on(On::SurfaceVariant));
+            .font_color(colors.on(OnColor::SurfaceVariant));
     }
 
     fn button(name: String) -> impl Bundle {

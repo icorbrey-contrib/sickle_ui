@@ -157,12 +157,12 @@ impl Foldable {
                 theme_data
                     .icons
                     .expand_more
-                    .with(colors.on(On::Surface), theme_spacing.icons.small),
+                    .with(colors.on(OnColor::Surface), theme_spacing.icons.small),
             )
             .animated()
             .font_color(AnimatedVals {
-                idle: colors.on(On::SurfaceVariant),
-                hover: colors.on(On::Surface).into(),
+                idle: colors.on(OnColor::SurfaceVariant),
+                hover: colors.on(OnColor::Surface).into(),
                 ..default()
             })
             .copy_from(theme_data.interaction_animation);
@@ -173,8 +173,8 @@ impl Foldable {
             .sized_font(font)
             .animated()
             .font_color(AnimatedVals {
-                idle: colors.on(On::SurfaceVariant),
-                hover: colors.on(On::Surface).into(),
+                idle: colors.on(OnColor::SurfaceVariant),
+                hover: colors.on(OnColor::Surface).into(),
                 ..default()
             })
             .copy_from(theme_data.interaction_animation);
@@ -195,7 +195,7 @@ impl Foldable {
             theme_data
                 .icons
                 .chevron_right
-                .with(colors.on(On::Surface), theme_spacing.icons.small),
+                .with(colors.on(OnColor::Surface), theme_spacing.icons.small),
         );
 
         style_builder
@@ -212,7 +212,7 @@ impl Foldable {
             theme_data
                 .icons
                 .arrow_right
-                .with(colors.on(On::Surface), theme_spacing.icons.small),
+                .with(colors.on(OnColor::Surface), theme_spacing.icons.small),
         );
 
         style_builder

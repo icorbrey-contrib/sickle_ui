@@ -241,7 +241,7 @@ impl Menu {
         style_builder
             .switch_target(Menu::LABEL)
             .sized_font(font)
-            .font_color(colors.on(On::Surface));
+            .font_color(colors.on(OnColor::Surface));
 
         style_builder
             .switch_target(Menu::CONTAINER)
@@ -271,7 +271,7 @@ impl Menu {
 
         style_builder
             .switch_target(Menu::LABEL)
-            .font_color(colors.on(On::Surface));
+            .font_color(colors.on(OnColor::Surface));
 
         style_builder
             .switch_target(Menu::CONTAINER)

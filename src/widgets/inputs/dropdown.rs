@@ -281,8 +281,8 @@ impl DropdownOption {
             .sized_font(font)
             .animated()
             .font_color(AnimatedVals {
-                idle: colors.on(On::PrimaryContainer),
-                hover: colors.on(On::Primary).into(),
+                idle: colors.on(OnColor::PrimaryContainer),
+                hover: colors.on(OnColor::Primary).into(),
                 ..default()
             })
             .copy_from(theme_data.interaction_animation);
@@ -426,8 +426,8 @@ impl Dropdown {
             .sized_font(font)
             .animated()
             .font_color(AnimatedVals {
-                idle: colors.on(On::Primary),
-                hover: colors.on(On::PrimaryContainer).into(),
+                idle: colors.on(OnColor::Primary),
+                hover: colors.on(OnColor::PrimaryContainer).into(),
                 ..default()
             })
             .copy_from(theme_data.interaction_animation);
@@ -440,12 +440,12 @@ impl Dropdown {
                 theme_data
                     .icons
                     .expand_more
-                    .with(colors.on(On::Primary), theme_spacing.icons.small),
+                    .with(colors.on(OnColor::Primary), theme_spacing.icons.small),
             )
             .animated()
             .font_color(AnimatedVals {
-                idle: colors.on(On::Primary),
-                hover: colors.on(On::PrimaryContainer).into(),
+                idle: colors.on(OnColor::Primary),
+                hover: colors.on(OnColor::PrimaryContainer).into(),
                 ..default()
             })
             .copy_from(theme_data.interaction_animation);
@@ -540,10 +540,10 @@ impl Dropdown {
 
         style_builder
             .switch_target(Dropdown::LABEL)
-            .font_color(colors.on(On::PrimaryContainer));
+            .font_color(colors.on(OnColor::PrimaryContainer));
         style_builder
             .switch_target(Dropdown::ICON)
-            .font_color(colors.on(On::PrimaryContainer));
+            .font_color(colors.on(OnColor::PrimaryContainer));
 
         style_builder
             .switch_target(Dropdown::PANEL)

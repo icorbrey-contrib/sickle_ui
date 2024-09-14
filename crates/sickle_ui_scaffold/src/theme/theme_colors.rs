@@ -125,7 +125,7 @@ pub enum Container {
 }
 
 #[derive(Clone, Copy, Debug)]
-pub enum On {
+pub enum OnColor {
     Primary,
     PrimaryContainer,
     PrimaryFixed,
@@ -384,26 +384,26 @@ impl SchemeColors {
         }
     }
 
-    pub fn on(&self, on: On) -> Color {
+    pub fn on(&self, on: OnColor) -> Color {
         match on {
-            On::Primary => self.on_primary,
-            On::PrimaryContainer => self.on_primary_container,
-            On::PrimaryFixed => self.on_primary_fixed,
-            On::PrimaryFixedVariant => self.on_primary_fixed_variant,
-            On::Secondary => self.on_secondary,
-            On::SecondaryContainer => self.on_secondary_container,
-            On::SecondaryFixed => self.on_secondary_fixed,
-            On::SecondaryFixedVariant => self.on_secondary_fixed_variant,
-            On::Tertiary => self.on_tertiary,
-            On::TertiaryContainer => self.on_tertiary_container,
-            On::TertiaryFixed => self.on_tertiary_fixed,
-            On::TertiaryFixedVariant => self.on_tertiary_fixed_variant,
-            On::Error => self.on_error,
-            On::ErrorContainer => self.on_error_container,
-            On::Background => self.on_background,
-            On::Surface => self.on_surface,
-            On::SurfaceVariant => self.on_surface_variant,
-            On::InverseSurface => self.inverse_on_surface,
+            OnColor::Primary => self.on_primary,
+            OnColor::PrimaryContainer => self.on_primary_container,
+            OnColor::PrimaryFixed => self.on_primary_fixed,
+            OnColor::PrimaryFixedVariant => self.on_primary_fixed_variant,
+            OnColor::Secondary => self.on_secondary,
+            OnColor::SecondaryContainer => self.on_secondary_container,
+            OnColor::SecondaryFixed => self.on_secondary_fixed,
+            OnColor::SecondaryFixedVariant => self.on_secondary_fixed_variant,
+            OnColor::Tertiary => self.on_tertiary,
+            OnColor::TertiaryContainer => self.on_tertiary_container,
+            OnColor::TertiaryFixed => self.on_tertiary_fixed,
+            OnColor::TertiaryFixedVariant => self.on_tertiary_fixed_variant,
+            OnColor::Error => self.on_error,
+            OnColor::ErrorContainer => self.on_error_container,
+            OnColor::Background => self.on_background,
+            OnColor::Surface => self.on_surface,
+            OnColor::SurfaceVariant => self.on_surface_variant,
+            OnColor::InverseSurface => self.inverse_on_surface,
         }
     }
 }

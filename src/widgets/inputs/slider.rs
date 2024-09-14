@@ -519,7 +519,7 @@ impl Slider {
         style_builder
             .switch_target(Slider::LABEL)
             .sized_font(font.clone())
-            .font_color(colors.on(On::Surface));
+            .font_color(colors.on(OnColor::Surface));
 
         if slider.config().label.is_none() {
             style_builder
@@ -548,7 +548,7 @@ impl Slider {
         style_builder
             .switch_target(Slider::READOUT)
             .sized_font(font.clone())
-            .font_color(colors.on(On::Surface));
+            .font_color(colors.on(OnColor::Surface));
 
         style_builder
             .switch_target(Slider::BAR)

@@ -37,7 +37,7 @@ pub mod prelude {
             AnimationLoop, AnimationSettings, AnimationState, InteractionStyle,
             LoopedAnimationConfig,
         },
-        theme_colors::{Accent, Container, On, Surface},
+        theme_colors::{Accent, Container, OnColor, Surface},
         theme_data::{Contrast, Scheme, ThemeData},
         typography::{FontScale, FontStyle, FontType, SizedFont},
         ComponentThemePlugin, CustomThemeUpdate, DefaultTheme, DynamicStyleBuilder, PseudoTheme,

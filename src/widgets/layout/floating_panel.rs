@@ -697,7 +697,7 @@ impl FloatingPanel {
                     .text
                     .get(FontStyle::Body, FontScale::Large, FontType::Regular),
             )
-            .font_color(colors.on(On::Surface));
+            .font_color(colors.on(OnColor::Surface));
 
         style_builder
             .switch_target(FloatingPanel::CLOSE_BUTTON_CONTAINER)
@@ -737,12 +737,12 @@ impl FloatingPanel {
                 theme_data
                     .icons
                     .expand_more
-                    .with(colors.on(On::Surface), theme_spacing.icons.small),
+                    .with(colors.on(OnColor::Surface), theme_spacing.icons.small),
             )
             .animated()
             .font_color(AnimatedVals {
-                idle: colors.on(On::SurfaceVariant),
-                hover: colors.on(On::Surface).into(),
+                idle: colors.on(OnColor::SurfaceVariant),
+                hover: colors.on(OnColor::Surface).into(),
                 ..default()
             })
             .copy_from(theme_data.interaction_animation);
@@ -755,12 +755,12 @@ impl FloatingPanel {
                 theme_data
                     .icons
                     .close
-                    .with(colors.on(On::Surface), theme_spacing.icons.small),
+                    .with(colors.on(OnColor::Surface), theme_spacing.icons.small),
             )
             .animated()
             .font_color(AnimatedVals {
-                idle: colors.on(On::SurfaceVariant),
-                hover: colors.on(On::Surface).into(),
+                idle: colors.on(OnColor::SurfaceVariant),
+                hover: colors.on(OnColor::Surface).into(),
                 ..default()
             })
             .copy_from(theme_data.interaction_animation);
@@ -800,7 +800,7 @@ impl FloatingPanel {
                 theme_data
                     .icons
                     .chevron_right
-                    .with(colors.on(On::Surface), theme_spacing.icons.small),
+                    .with(colors.on(OnColor::Surface), theme_spacing.icons.small),
             );
     }
 
