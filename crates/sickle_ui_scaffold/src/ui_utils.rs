@@ -8,10 +8,17 @@ use bevy::{
 pub struct UiUtils;
 
 impl UiUtils {
+    /// Returns a simplified name from a `ComponentInfo`
+    ///
+    /// `ComponentInfo` returns the fully qualified name, this function calls
+    /// [`UiUtils::simplify_type_name`] on it.
     pub fn simplify_component_name(component_info: &ComponentInfo) -> String {
         UiUtils::simplify_type_name(component_info.name())
     }
 
+    /// Strips fully qualified names and returns the type name
+    ///
+    /// Supports a single generic parameter, which will also be stripped from its type path.
     pub fn simplify_type_name(name: &str) -> String {
         let mut simple_name = String::from(name.split("::").last().unwrap());
 
@@ -31,7 +38,7 @@ impl UiUtils {
         simple_name
     }
 
-    /// Gets the nearest clipped container.
+    /// Gets the nearest clipped container
     ///
     /// Useful for absolutely positioned elements to find a maximum size they can be visible in.
     /// Offset is from the container top left corner to the element's top left corner.
@@ -94,32 +101,44 @@ impl UiUtils {
         (container_size, offset)
     }
 
-    /// Returns the calculated padding based on viewport (either based on TargetCamera or the Primary Window).
-    /// Vec4 contains sizes in the order: Top, Right, Bottom, Left
+    /// Returns the calculated padding based on viewport
+    ///
+    /// This will either be based on TargetCamera or the Primary Window).
+    ///
+    /// Returned Vec4 contains sizes in the order: Top, Right, Bottom, Left.
     pub fn padding_as_px(entity: Entity, world: &World) -> Vec4 {
         // Unsafe unwrap: If a UI element doesn't have a Style, we should panic!
         let style = world.get::<Style>(entity).unwrap();
         UiUtils::ui_rect_to_px(style.padding, entity, world)
     }
 
-    /// Returns the calculated border based on viewport (either based on TargetCamera or the Primary Window).
-    /// Vec4 contains sizes in the order: Top, Right, Bottom, Left
+    /// Returns the calculated border based on viewport
+    ///
+    /// This will either be based on TargetCamera or the Primary Window.
+    ///
+    /// Returned Vec4 contains sizes in the order: Top, Right, Bottom, Left.
     pub fn border_as_px(entity: Entity, world: &World) -> Vec4 {
         // Unsafe unwrap: If a UI element doesn't have a Style, we should panic!
         let style = world.get::<Style>(entity).unwrap();
         UiUtils::ui_rect_to_px(style.border, entity, world)
     }
 
-    /// Returns the calculated margin based on viewport (either based on TargetCamera or the Primary Window).
-    /// Vec4 contains sizes in the order: Top, Right, Bottom, Left
+    /// Returns the calculated margin based on viewport
+    ///
+    /// This will either based on TargetCamera or the Primary Window.
+    ///
+    /// Returned Vec4 contains sizes in the order: Top, Right, Bottom, Left.
     pub fn margin_as_px(entity: Entity, world: &World) -> Vec4 {
         // Unsafe unwrap: If a UI element doesn't have a Style, we should panic!
         let style = world.get::<Style>(entity).unwrap();
         UiUtils::ui_rect_to_px(style.margin, entity, world)
     }
 
-    /// Returns the calculated edge sizes based on viewport (either based on TargetCamera or the Primary Window).
-    /// Vec4 contains sizes in the order: Top, Right, Bottom, Left
+    /// Returns the calculated edge sizes based on viewport
+    ///
+    /// This will either be based on TargetCamera or the Primary Window.
+    ///
+    /// Returned Vec4 contains sizes in the order: Top, Right, Bottom, Left.
     pub fn ui_rect_to_px(rect: UiRect, entity: Entity, world: &World) -> Vec4 {
         let viewport_size = if let Some(render_target) = UiUtils::find_render_target(entity, world)
         {
@@ -145,6 +164,7 @@ impl UiUtils {
     }
 
     /// Converts a Val to actual pixel size, based on the viewport size
+    ///
     /// NOTE: `Val::Auto` converst to 0., but this is only correct for paddings, borders, and margins.
     /// Width and height are calculated by taffy based on flex layout.
     /// Flex shrink may also contract final values for paddings, borders, and margins,
@@ -161,6 +181,7 @@ impl UiUtils {
         }
     }
 
+    /// Finds a UI entity's render target by searching for the closest ancestor with a TargetCamera
     pub fn find_render_target(entity: Entity, world: &World) -> Option<RenderTarget> {
         let mut current_ancestor = entity;
         while let Some(parent) = world.get::<Parent>(current_ancestor) {
@@ -176,6 +197,7 @@ impl UiUtils {
         None
     }
 
+    /// Extracts a RenderTarget's size
     pub fn render_target_size(render_target: RenderTarget, world: &World) -> Vec2 {
         match render_target {
             RenderTarget::Window(window) => match window {
@@ -214,6 +236,7 @@ impl UiUtils {
         }
     }
 
+    /// Returns the Window component of the entity marked with `PrimaryWindow`
     pub fn get_primary_window(world: &World) -> &Window {
         // Unsafe single: don't ask for a primary window if it doesn't exists pls.
         // TODO: use resource to store primary window entity
@@ -228,6 +251,7 @@ impl UiUtils {
         world.get::<Window>(entity).unwrap()
     }
 
+    /// Extracts width and height from a WindowResolution
     pub fn resolution_to_vec2(resolution: &WindowResolution) -> Vec2 {
         Vec2::new(resolution.width(), resolution.height())
     }

@@ -45,6 +45,9 @@ impl EntityCommand for SetTextSections {
 }
 
 pub trait SetTextSectionsExt {
+    /// Set text sections for a UI entity
+    ///
+    /// The [`Text`] component must already exist on the target entity.
     fn set_text_sections(&mut self, sections: Vec<TextSection>) -> &mut Self;
 }
 
@@ -75,6 +78,9 @@ impl EntityCommand for SetText {
 }
 
 pub trait SetTextExt {
+    /// Set text for a UI entity with the given [`TextStyle`]
+    ///
+    /// The [`Text`] component must already exist on the target entity.
     fn set_text(&mut self, text: impl Into<String>, style: Option<TextStyle>) -> &mut Self;
 }
 
@@ -113,6 +119,9 @@ impl EntityCommand for UpdateText {
 }
 
 pub trait UpdateTextExt {
+    /// Update an entity's [`Text`]
+    ///
+    /// The [`Text`] component must already exist.
     fn update_text(&mut self, text: impl Into<String>) -> &mut Self;
 }
 
@@ -143,6 +152,7 @@ impl Command for SetCursor {
 }
 
 pub trait SetCursorExt<'w, 's, 'a> {
+    /// Set the [`PrimaryWindow`]'s cursor
     fn set_cursor(&mut self, cursor: CursorIcon);
 }
 
@@ -246,10 +256,6 @@ impl EntityCommand for LogHierarchy {
 }
 
 pub trait LogHierarchyExt {
-    fn log_hierarchy(&mut self, component_filter: Option<fn(ComponentInfo) -> bool>) -> &mut Self;
-}
-
-impl LogHierarchyExt for EntityCommands<'_> {
     /// Logs the hierarchy of the entity along with the component of each entity in the tree.
     /// Components listed can be optionally filtered by supplying a `component_filter`
     ///
@@ -276,6 +282,10 @@ impl LogHierarchyExt for EntityCommands<'_> {
     ///     ╚══ Entity 292v1:
     ///                └── Node
     /// </pre>
+    fn log_hierarchy(&mut self, component_filter: Option<fn(ComponentInfo) -> bool>) -> &mut Self;
+}
+
+impl LogHierarchyExt for EntityCommands<'_> {
     fn log_hierarchy(&mut self, component_filter: Option<fn(ComponentInfo) -> bool>) -> &mut Self {
         self.add(LogHierarchy {
             level: 0,
@@ -289,6 +299,7 @@ impl LogHierarchyExt for EntityCommands<'_> {
 
 // Adopted from @brandonreinhart
 pub trait EntityCommandsNamedExt {
+    /// Name the entity by inserting a [`Name`] component with the given string
     fn named(&mut self, name: impl Into<String>) -> &mut Self;
 }
 
@@ -299,6 +310,9 @@ impl EntityCommandsNamedExt for EntityCommands<'_> {
 }
 
 pub trait RefreshThemeExt {
+    /// Refresh the entity's theme, based on the `C` component
+    ///
+    /// This requires `C` to implement [`DefaultTheme`] as described in the readme.
     fn refresh_theme<C>(&mut self) -> &mut Self
     where
         C: DefaultTheme;
@@ -509,8 +523,14 @@ fn fold_dynamic_styles(
 }
 
 pub trait ManageFluxInteractionStopwatchLockExt {
+    /// Set the [`FluxInteractionStopwatchLock`] of the entity to the given duration
+    ///
+    /// This in turn will keep the [`crate::flux_interaction::FluxInteractionStopwatch`] for the given period.
     fn lock_stopwatch(&mut self, owner: &'static str, duration: StopwatchLock) -> &mut Self;
 
+    /// Release the [`FluxInteractionStopwatchLock`] of the entity
+    ///
+    /// The [`crate::flux_interaction::FluxInteractionStopwatch`] will cleaned up normally
     fn try_release_stopwatch_lock(&mut self, lock_of: &'static str) -> &mut Self;
 }
 
@@ -539,7 +559,15 @@ impl ManageFluxInteractionStopwatchLockExt for EntityCommands<'_> {
 }
 
 pub trait ManagePseudoStateExt {
+    /// Add a [`PseudoState`] to the entity if it doesn't have it already
+    ///
+    /// Will insert the carrier [`PseudoStates`] component if necessary.
+    /// Will not trigger change detection if the state is already in the collection.
     fn add_pseudo_state(&mut self, state: PseudoState) -> &mut Self;
+
+    /// Removes a [`PseudoState`] from the entity
+    ///
+    /// Does not remove the [`PseudoStates`] even if it is empty as a result of the removal.
     fn remove_pseudo_state(&mut self, state: PseudoState) -> &mut Self;
 }
 
@@ -580,6 +608,12 @@ impl ManagePseudoStateExt for EntityCommands<'_> {
 }
 
 pub trait UpdateStatesExt<'w, 's, 'a> {
+    // TODO: deprecate in favor of bevy's own
+    // #[deprecated(
+    //     since = "0.3.0",
+    //     note = "please use bevy's `commands.set_state` instead"
+    // )]
+    /// Update a state to a new value via [`NextState`]
     fn next_state<C: States + FreelyMutableState>(&mut self, state: C);
 }
 

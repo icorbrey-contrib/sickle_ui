@@ -25,10 +25,12 @@ pub struct UiStyle<'a> {
 }
 
 impl UiStyle<'_> {
+    /// Returns the Entity that is the target of all styling commands
     pub fn id(&self) -> Entity {
         self.commands.id()
     }
 
+    /// Returns the underlying EntityCommands via reborrow
     pub fn entity_commands(&mut self) -> EntityCommands {
         self.commands.reborrow()
     }
@@ -73,16 +75,19 @@ pub struct UiStyleUnchecked<'a> {
 }
 
 impl UiStyleUnchecked<'_> {
+    /// Returns the Entity that is the target of all styling commands
     pub fn id(&self) -> Entity {
         self.commands.id()
     }
 
+    /// Returns the underlying EntityCommands via reborrow
     pub fn entity_commands(&mut self) -> EntityCommands {
         self.commands.reborrow()
     }
 }
 
 pub trait UiStyleUncheckedExt {
+    /// Same as [`UiStyleExt::style`], except styling calls will bypass attribute locks
     fn style_unchecked(&mut self, entity: Entity) -> UiStyleUnchecked;
 }
 
@@ -102,17 +107,24 @@ pub trait LogicalEq<Rhs: ?Sized = Self> {
     }
 }
 
+/// A set of attributes that should be protected against styling via [`UiStyleExt::style`] commands.
+///
+/// Used by widgets to protect attributes that are controlled by logic and should not be styled by end users.
 #[derive(Component, Debug, Default, Reflect)]
 pub struct LockedStyleAttributes(HashSet<LockableStyleAttribute>);
 
 impl LockedStyleAttributes {
+    /// Creates a new empty set
     pub fn new() -> Self {
         Self(HashSet::<LockableStyleAttribute>::new())
     }
+
+    /// Creates a new set from the provided set of [`LockableStyleAttribute`]s
     pub fn lock(attributes: impl Into<HashSet<LockableStyleAttribute>>) -> Self {
         Self(attributes.into())
     }
 
+    /// Creates a new set from the provided list of [`LockableStyleAttribute`]s
     pub fn from_vec(attributes: Vec<LockableStyleAttribute>) -> Self {
         let mut set = HashSet::<LockableStyleAttribute>::with_capacity(attributes.len());
         for attribute in attributes.iter() {
@@ -124,6 +136,7 @@ impl LockedStyleAttributes {
         Self(set)
     }
 
+    /// Checks whether the set contains the attribute
     pub fn contains(&self, attr: LockableStyleAttribute) -> bool {
         self.0.contains(&attr)
     }
@@ -137,6 +150,9 @@ impl From<LockableStyleAttribute> for HashSet<LockableStyleAttribute> {
     }
 }
 
+/// Dummy stylable attribute used for tracking state changes
+///
+/// This can be used in animated themes to provide discretized states to interop with logic
 #[derive(Component, Clone, Copy, Debug, Default, PartialEq, Eq, Reflect)]
 pub enum TrackedStyleState {
     #[default]
