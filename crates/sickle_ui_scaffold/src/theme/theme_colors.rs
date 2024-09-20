@@ -149,6 +149,7 @@ pub enum OnColor {
 #[derive(Clone, Debug, Default, Reflect, Serialize, Deserialize)]
 pub struct ExtendedColor {
     pub name: String,
+    #[serde(with = "serialize_color")]
     pub color: Color,
     pub description: String,
     pub harmonized: bool,
