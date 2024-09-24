@@ -28,6 +28,15 @@ impl Default for LabelConfig {
     }
 }
 
+impl From<&str> for LabelConfig {
+    fn from(value: &str) -> Self {
+        LabelConfig {
+            label: value.into(),
+            ..default()
+        }
+    }
+}
+
 impl LabelConfig {
     pub fn from(label: impl Into<String>) -> LabelConfig {
         LabelConfig {
@@ -71,12 +80,12 @@ impl LabelConfig {
 }
 
 pub trait UiLabelExt {
-    fn label(&mut self, config: LabelConfig) -> UiBuilder<Entity>;
+    fn label(&mut self, config: impl Into<LabelConfig>) -> UiBuilder<Entity>;
 }
 
 impl UiLabelExt for UiBuilder<'_, Entity> {
-    fn label(&mut self, config: LabelConfig) -> UiBuilder<Entity> {
-        self.spawn((config.frame(), Label))
+    fn label(&mut self, config: impl Into<LabelConfig>) -> UiBuilder<Entity> {
+        self.spawn((config.into().frame(), Label))
     }
 }
 
