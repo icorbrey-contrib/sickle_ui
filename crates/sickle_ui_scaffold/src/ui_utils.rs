@@ -38,6 +38,7 @@ impl UiUtils {
         simple_name
     }
 
+    // TODO: Revise this, the offset calc seems to be off.
     /// Gets the nearest clipped container
     ///
     /// Useful for absolutely positioned elements to find a maximum size they can be visible in.
