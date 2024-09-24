@@ -1,4 +1,5 @@
 mod assets;
+#[cfg(feature = "dev_panels")]
 pub mod dev_panels;
 pub mod input_extension;
 pub mod widgets;

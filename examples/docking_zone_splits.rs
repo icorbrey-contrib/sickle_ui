@@ -1,8 +1,10 @@
 //! An example using the widget library to test docking zones and zone splits.
 use bevy::prelude::*;
 
+#[cfg(feature = "dev_panels")]
+use sickle_ui::dev_panels::hierarchy::{HierarchyTreeViewPlugin, UiHierarchyExt};
+
 use sickle_ui::{
-    dev_panels::hierarchy::{HierarchyTreeViewPlugin, UiHierarchyExt},
     ui_builder::{UiBuilder, UiBuilderExt, UiContextRoot, UiRoot},
     ui_style::prelude::*,
     widgets::prelude::*,
@@ -10,19 +12,22 @@ use sickle_ui::{
 };
 
 fn main() {
-    App::new()
-        .add_plugins(DefaultPlugins.set(WindowPlugin {
-            primary_window: Some(Window {
-                title: "Sickle UI - Docking Zone Splits".into(),
-                resolution: (1280., 720.).into(),
-                ..default()
-            }),
+    let mut app = App::new();
+    app.add_plugins(DefaultPlugins.set(WindowPlugin {
+        primary_window: Some(Window {
+            title: "Sickle UI - Docking Zone Splits".into(),
+            resolution: (1280., 720.).into(),
             ..default()
-        }))
-        .add_plugins(SickleUiPlugin)
-        .add_plugins(HierarchyTreeViewPlugin)
-        .add_systems(Startup, setup.in_set(UiStartupSet))
-        .run();
+        }),
+        ..default()
+    }))
+    .add_plugins(SickleUiPlugin)
+    .add_systems(Startup, setup.in_set(UiStartupSet));
+
+    #[cfg(feature = "dev_panels")]
+    app.add_plugins(HierarchyTreeViewPlugin);
+
+    app.run();
 }
 
 #[derive(Component)]
@@ -79,6 +84,11 @@ fn setup(mut commands: Commands) {
                     },
                     |column| {
                         hierarchy_container = column.id();
+
+                        #[cfg(not(feature = "dev_panels"))]
+                        column.label(
+                            "Run with '--features=dev_panels'\nto get a hierarchy view here!",
+                        );
                     },
                 )
                 .style()
@@ -99,6 +109,7 @@ fn setup(mut commands: Commands) {
         },
     );
 
+    #[cfg(feature = "dev_panels")]
     commands
         .ui_builder(hierarchy_container)
         .hierarchy_for(root_entity);

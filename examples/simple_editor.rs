@@ -2,56 +2,62 @@
 use bevy::prelude::*;
 
 use ease::Ease;
+#[cfg(feature = "dev_panels")]
+use sickle_ui::dev_panels::{
+    hierarchy::{HierarchyTreeViewPlugin, UiHierarchyExt},
+    scene_view::{SceneView, SceneViewPlugin, SpawnSceneViewPreUpdate, UiSceneViewExt},
+};
+
 use sickle_ui::{
-    dev_panels::{
-        hierarchy::{HierarchyTreeViewPlugin, UiHierarchyExt},
-        scene_view::{SceneView, SceneViewPlugin, SpawnSceneViewPreUpdate, UiSceneViewExt},
-    },
     prelude::*,
     ui_commands::{SetCursorExt, UpdateStatesExt},
     SickleUiPlugin,
 };
 
 fn main() {
-    App::new()
-        .add_plugins(DefaultPlugins.set(WindowPlugin {
-            primary_window: Some(Window {
-                title: "Sickle UI -  Simple Editor".into(),
-                resolution: (1280., 720.).into(),
-                ..default()
-            }),
+    let mut app = App::new();
+
+    app.add_plugins(DefaultPlugins.set(WindowPlugin {
+        primary_window: Some(Window {
+            title: "Sickle UI -  Simple Editor".into(),
+            resolution: (1280., 720.).into(),
             ..default()
-        }))
-        .add_plugins(SickleUiPlugin)
-        .add_plugins(UiFooterRootNodePlugin)
-        .add_plugins(OutlinedBlockPlugin)
-        .add_plugins(TextureAtlasInteractionPlugin)
-        .init_resource::<CurrentPage>()
-        .init_state::<Page>()
-        .add_plugins(HierarchyTreeViewPlugin)
+        }),
+        ..default()
+    }))
+    .add_plugins(SickleUiPlugin)
+    .add_plugins(UiFooterRootNodePlugin)
+    .add_plugins(OutlinedBlockPlugin)
+    .add_plugins(TextureAtlasInteractionPlugin)
+    .init_resource::<CurrentPage>()
+    .init_state::<Page>()
+    .add_systems(Startup, setup.in_set(UiStartupSet))
+    .add_systems(OnEnter(Page::Layout), layout_showcase)
+    .add_systems(OnExit(Page::Layout), clear_content_on_menu_change)
+    .add_systems(OnEnter(Page::Playground), interaction_showcase)
+    .add_systems(OnExit(Page::Playground), clear_content_on_menu_change)
+    .add_systems(PreUpdate, exit_app_on_menu_item)
+    .add_systems(
+        Update,
+        (
+            update_current_page,
+            handle_theme_data_update,
+            handle_theme_switch,
+            handle_theme_contrast_select,
+        )
+            .chain()
+            .after(WidgetLibraryUpdate),
+    );
+
+    #[cfg(feature = "dev_panels")]
+    app.add_plugins(HierarchyTreeViewPlugin)
         .add_plugins(SceneViewPlugin)
-        .add_systems(Startup, setup.in_set(UiStartupSet))
-        .add_systems(OnEnter(Page::Layout), layout_showcase)
-        .add_systems(OnExit(Page::Layout), clear_content_on_menu_change)
-        .add_systems(OnEnter(Page::Playground), interaction_showcase)
-        .add_systems(OnExit(Page::Playground), clear_content_on_menu_change)
-        .add_systems(PreUpdate, exit_app_on_menu_item)
         .add_systems(
             PreUpdate,
             (spawn_hierarchy_view, despawn_hierarchy_view).after(SpawnSceneViewPreUpdate),
-        )
-        .add_systems(
-            Update,
-            (
-                update_current_page,
-                handle_theme_data_update,
-                handle_theme_switch,
-                handle_theme_contrast_select,
-            )
-                .chain()
-                .after(WidgetLibraryUpdate),
-        )
-        .run();
+        );
+
+    app.run();
 }
 
 #[derive(Component)]
@@ -739,6 +745,7 @@ fn clear_content_on_menu_change(
     commands.set_cursor(CursorIcon::Default);
 }
 
+#[cfg(feature = "dev_panels")]
 fn spawn_hierarchy_view(
     q_added_scene_view: Query<&SceneView, Added<SceneView>>,
     q_hierarchy_panel: Query<Entity, With<HierarchyPanel>>,
@@ -758,6 +765,7 @@ fn spawn_hierarchy_view(
     }
 }
 
+#[cfg(feature = "dev_panels")]
 fn despawn_hierarchy_view(
     q_hierarchy_panel: Query<Entity, With<HierarchyPanel>>,
     q_removed_scene_view: RemovedComponents<SceneView>,
@@ -799,6 +807,11 @@ fn layout_showcase(root_node: Query<Entity, With<ShowcaseContainer>>, mut comman
                                 |tab_container| {
                                     tab_container.add_tab("Hierarchy".into(), |panel| {
                                         panel.insert(HierarchyPanel);
+
+                                        #[cfg(not(feature = "dev_panels"))]
+                                        panel.label(
+                                            "Run with '--features=dev_panels'\nto get a hierarchy view here!",
+                                        );
                                     });
                                     tab_container.add_tab("Tab 3".into(), |panel| {
                                         panel.label(LabelConfig {
@@ -816,8 +829,15 @@ fn layout_showcase(root_node: Query<Entity, With<ShowcaseContainer>>, mut comman
                                 false,
                                 |tab_container| {
                                     tab_container.add_tab("Scene View".into(), |panel| {
+                                        #[cfg(feature = "dev_panels")]
                                         panel.scene_view("examples/Low_poly_scene.gltf#Scene0");
+
+                                        #[cfg(not(feature = "dev_panels"))]
+                                        panel.label(
+                                            "Run with '--features=dev_panels'\nto get a scene view here!",
+                                        );
                                     });
+
                                     tab_container.add_tab("Tab 2".into(), |panel| {
                                         panel.label(LabelConfig {
                                             label: "Panel 2".into(),

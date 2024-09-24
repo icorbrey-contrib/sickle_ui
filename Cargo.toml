@@ -28,6 +28,7 @@ disable-ui-context-placeholder-warn = [
 ]
 bevy_default_font = ["bevy/default_font"]
 observable = []
+dev_panels = []
 
 [dependencies]
 sickle_math = { path = "crates/sickle_math", version = "0.3.0" }
@@ -52,6 +53,4 @@ serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0.127"
 
 [dev-dependencies]
-bevy = { version = "*", default-features = false, features = [
-    "bevy_gltf",
-]}
+bevy = { version = "*", default-features = false, features = ["bevy_gltf"] }
