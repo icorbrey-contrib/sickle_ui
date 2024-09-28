@@ -63,10 +63,29 @@ impl UiBuilder<'_, UiRoot> {
     }
 }
 
-impl UiBuilder<'_, Entity> {
+/// Trait to reduce duplication of code on UiBuilder Implementation through composition
+/// basically, as long as the type has a way of returning its own entity Id, all methods implemented on the
+/// UiBuilder becomes available
+pub trait UiBuilderGetId {
     /// The ID (Entity) of the current builder
+    fn get_id(&self) -> Entity;
+}
+
+impl UiBuilderGetId for Entity {
+    fn get_id(&self) -> Entity {
+        *self
+    }
+}
+
+impl<T> UiBuilderGetId for (Entity, T) {
+    fn get_id(&self) -> Entity {
+        self.0
+    }
+}
+
+impl<T: UiBuilderGetId> UiBuilder<'_, T> {
     pub fn id(&self) -> Entity {
-        *self.context()
+        self.context().get_id()
     }
 
     /// The `EntityCommands` of the builder
@@ -75,6 +94,17 @@ impl UiBuilder<'_, Entity> {
     pub fn entity_commands(&mut self) -> EntityCommands {
         let entity = self.id();
         self.commands().entity(entity)
+    }
+
+    /// This allows for using the `EntityCommands` of the builder, and also returning the UiBuilder with context
+    /// intact for further processing
+    pub fn entity_commands_inplace(
+        &mut self,
+        entity_commands_fn: impl FnOnce(&mut EntityCommands),
+    ) -> &mut Self {
+        let mut ec = self.entity_commands();
+        entity_commands_fn(&mut ec);
+        self
     }
 
     /// Styling commands for UI Nodes
@@ -102,6 +132,15 @@ impl UiBuilder<'_, Entity> {
     pub fn style(&mut self) -> UiStyle {
         let entity = self.id();
         self.commands().style(entity)
+    }
+
+    /// This allows for modification of style, and also returning the UiBuilder with context
+    /// intact for further processing
+    pub fn style_inplace(&mut self, style_fn: impl FnOnce(&mut UiStyle)) -> &mut Self {
+        let entity = self.id();
+        let mut style = self.commands().style(entity);
+        style_fn(&mut style);
+        self
     }
 
     /// Same as [`UiBuilder<'_, Entity>::style()`], except style commands bypass possible attribute locks.
@@ -144,6 +183,14 @@ impl UiBuilder<'_, Entity> {
     }
 }
 
+/// Implementations that are useful for creating nested widgets
+impl<T> UiBuilder<'_, (Entity, T)> {
+    /// The extension content of the UiBuilder
+    pub fn context_data(&self) -> &T {
+        &self.context().1
+    }
+}
+
 pub trait UiBuilderExt {
     /// A contextual UI Builder, see [`UiBuilder<'a, T>`]
     fn ui_builder<T>(&mut self, context: T) -> UiBuilder<T>;
@@ -153,6 +200,15 @@ impl UiBuilderExt for Commands<'_, '_> {
     fn ui_builder<T>(&mut self, context: T) -> UiBuilder<T> {
         UiBuilder {
             commands: self.reborrow(),
+            context,
+        }
+    }
+}
+
+impl UiBuilderExt for EntityCommands<'_> {
+    fn ui_builder<T>(&mut self, context: T) -> UiBuilder<T> {
+        UiBuilder {
+            commands: self.commands(),
             context,
         }
     }
