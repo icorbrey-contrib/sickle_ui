@@ -66,7 +66,7 @@ pub struct UiCamera;
 #[derive(Component)]
 pub struct UiMainRootNode;
 
-// Example themed widgets, generated with snipped
+// Example themed widgets, generated with snippet
 pub struct UiFooterRootNodePlugin;
 
 impl Plugin for UiFooterRootNodePlugin {
