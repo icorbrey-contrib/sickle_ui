@@ -233,7 +233,10 @@ impl MenuItem {
             .copy_from(theme_data.interaction_animation);
 
         let leading_icon = match leading_icon.is_codepoint() {
-            true => leading_icon.with(colors.on(OnColor::SurfaceVariant), theme_spacing.icons.small),
+            true => leading_icon.with(
+                colors.on(OnColor::SurfaceVariant),
+                theme_spacing.icons.small,
+            ),
             false => leading_icon,
         };
         style_builder
@@ -261,7 +264,10 @@ impl MenuItem {
             .font_color(colors.on(OnColor::SurfaceVariant));
 
         let trailing_icon = match trailing_icon.is_codepoint() {
-            true => trailing_icon.with(colors.on(OnColor::SurfaceVariant), theme_spacing.icons.small),
+            true => trailing_icon.with(
+                colors.on(OnColor::SurfaceVariant),
+                theme_spacing.icons.small,
+            ),
             false => trailing_icon,
         };
         style_builder
@@ -321,8 +327,9 @@ impl MenuItem {
 
     pub(crate) fn scaffold(
         builder: &mut UiBuilder<Entity>,
-        config: MenuItemConfig,
+        config: impl Into<MenuItemConfig>,
     ) -> (Entity, MenuItem) {
+        let config = config.into();
         let mut menu_item = MenuItem {
             leading_icon: config.leading_icon,
             trailing_icon: config.trailing_icon,
@@ -370,11 +377,11 @@ impl MenuItem {
 }
 
 pub trait UiMenuItemExt {
-    fn menu_item(&mut self, config: MenuItemConfig) -> UiBuilder<Entity>;
+    fn menu_item(&mut self, config: impl Into<MenuItemConfig>) -> UiBuilder<Entity>;
 }
 
 impl UiMenuItemExt for UiBuilder<'_, Entity> {
-    fn menu_item(&mut self, config: MenuItemConfig) -> UiBuilder<Entity> {
+    fn menu_item(&mut self, config: impl Into<MenuItemConfig>) -> UiBuilder<Entity> {
         let (id, menu_item) = MenuItem::scaffold(self, config);
 
         self.commands().ui_builder(id).insert(menu_item);
@@ -383,7 +390,7 @@ impl UiMenuItemExt for UiBuilder<'_, Entity> {
 }
 
 impl UiMenuItemExt for UiBuilder<'_, Menu> {
-    fn menu_item(&mut self, config: MenuItemConfig) -> UiBuilder<Entity> {
+    fn menu_item(&mut self, config: impl Into<MenuItemConfig>) -> UiBuilder<Entity> {
         let container_id = self.container();
         let id = self
             .commands()
@@ -396,7 +403,7 @@ impl UiMenuItemExt for UiBuilder<'_, Menu> {
 }
 
 impl UiMenuItemExt for UiBuilder<'_, Submenu> {
-    fn menu_item(&mut self, config: MenuItemConfig) -> UiBuilder<Entity> {
+    fn menu_item(&mut self, config: impl Into<MenuItemConfig>) -> UiBuilder<Entity> {
         let container_id = self.container();
         let id = self
             .commands()
@@ -409,7 +416,7 @@ impl UiMenuItemExt for UiBuilder<'_, Submenu> {
 }
 
 impl UiMenuItemExt for UiBuilder<'_, ContextMenu> {
-    fn menu_item(&mut self, config: MenuItemConfig) -> UiBuilder<Entity> {
+    fn menu_item(&mut self, config: impl Into<MenuItemConfig>) -> UiBuilder<Entity> {
         let container_id = self.container();
         let id = self
             .commands()

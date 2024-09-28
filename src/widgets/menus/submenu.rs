@@ -457,7 +457,7 @@ pub trait UiSubmenuExt {
     /// - `PseudoState::Open` is used when the submenu panel is visible
     fn submenu(
         &mut self,
-        config: SubmenuConfig,
+        config: impl Into<SubmenuConfig>,
         spawn_items: impl FnOnce(&mut UiBuilder<Submenu>),
     ) -> UiBuilder<Entity>;
 }
@@ -465,11 +465,12 @@ pub trait UiSubmenuExt {
 impl UiSubmenuExt for UiBuilder<'_, Entity> {
     fn submenu(
         &mut self,
-        config: SubmenuConfig,
+        config: impl Into<SubmenuConfig>,
         spawn_items: impl FnOnce(&mut UiBuilder<Submenu>),
     ) -> UiBuilder<Entity> {
+        let config = config.into();
         let external_container = self.id();
-        let (id, menu_item) = MenuItem::scaffold(self, config.into());
+        let (id, menu_item) = MenuItem::scaffold(self, config);
         let container = self
             .commands()
             .ui_builder(id)
@@ -493,7 +494,7 @@ impl UiSubmenuExt for UiBuilder<'_, Entity> {
 impl UiSubmenuExt for UiBuilder<'_, Menu> {
     fn submenu(
         &mut self,
-        config: SubmenuConfig,
+        config: impl Into<SubmenuConfig>,
         spawn_items: impl FnOnce(&mut UiBuilder<Submenu>),
     ) -> UiBuilder<Entity> {
         let container_id = self.container();
@@ -510,7 +511,7 @@ impl UiSubmenuExt for UiBuilder<'_, Menu> {
 impl UiSubmenuExt for UiBuilder<'_, Submenu> {
     fn submenu(
         &mut self,
-        config: SubmenuConfig,
+        config: impl Into<SubmenuConfig>,
         spawn_items: impl FnOnce(&mut UiBuilder<Submenu>),
     ) -> UiBuilder<Entity> {
         let container_id = self.container();
@@ -527,7 +528,7 @@ impl UiSubmenuExt for UiBuilder<'_, Submenu> {
 impl UiSubmenuExt for UiBuilder<'_, ContextMenu> {
     fn submenu(
         &mut self,
-        config: SubmenuConfig,
+        config: impl Into<SubmenuConfig>,
         spawn_items: impl FnOnce(&mut UiBuilder<Submenu>),
     ) -> UiBuilder<Entity> {
         let container_id = self.container();
