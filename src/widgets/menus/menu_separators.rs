@@ -6,7 +6,7 @@ use sickle_ui_scaffold::prelude::*;
 use super::{
     context_menu::{ContextMenu, UiContextMenuExt},
     menu::{Menu, UiMenuSubExt},
-    menu_bar::{MenuBar, UiMenuBarSubExt},
+    menu_bar::MenuBar,
     submenu::{Submenu, UiSubmenuSubExt},
 };
 

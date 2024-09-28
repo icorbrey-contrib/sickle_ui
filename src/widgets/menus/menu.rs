@@ -7,10 +7,7 @@ use crate::widgets::layout::{
     label::{LabelConfig, UiLabelExt},
 };
 
-use super::{
-    menu_bar::{MenuBar, UiMenuBarSubExt},
-    menu_item::MenuItem,
-};
+use super::{menu_bar::MenuBar, menu_item::MenuItem};
 
 // TODO: Move all z-index constants to a resource
 const MENU_CONTAINER_Z_INDEX: i32 = 100000;

@@ -52,7 +52,7 @@ pub mod prelude {
         },
         menus::extra_menu::{ExtraMenu, UiExtraMenuExt},
         menus::menu::{MenuConfig, MenuUpdate, UiMenuExt, UiMenuSubExt},
-        menus::menu_bar::{UiMenuBarExt, UiMenuBarSubExt},
+        menus::menu_bar::UiMenuBarExt,
         menus::menu_item::{MenuItem, MenuItemConfig, MenuItemUpdate, UiMenuItemExt},
         menus::menu_separators::{UiMenuItemSeparatorExt, UiMenuSeparatorExt},
         menus::shortcut::{Shortcut, ShortcutPreUpdate},

@@ -75,13 +75,3 @@ impl UiMenuBarExt for UiBuilder<'_, Entity> {
         self.commands().ui_builder(id)
     }
 }
-
-pub trait UiMenuBarSubExt {
-    fn id(&self) -> Entity;
-}
-
-impl UiMenuBarSubExt for UiBuilder<'_, (Entity, MenuBar)> {
-    fn id(&self) -> Entity {
-        self.context().0
-    }
-}

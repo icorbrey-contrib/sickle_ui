@@ -4,7 +4,7 @@ use sickle_ui_scaffold::ui_builder::{UiBuilder, UiBuilderExt};
 
 use crate::widgets::layout::container::UiContainerExt;
 
-use super::menu_bar::{MenuBar, UiMenuBarSubExt};
+use super::menu_bar::MenuBar;
 
 #[derive(Component, Debug, Default, Reflect)]
 #[reflect(Component)]
