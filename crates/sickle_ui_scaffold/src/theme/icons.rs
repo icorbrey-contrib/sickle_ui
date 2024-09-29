@@ -64,19 +64,24 @@ pub struct CustomIconData {
 #[derive(Clone, Debug, Reflect)]
 pub struct Icons {
     pub arrow_right: IconData,
+    pub bug_report: IconData,
     pub checkmark: IconData,
     pub chevron_left: IconData,
     pub chevron_right: IconData,
     pub close: IconData,
+    pub error: IconData,
     pub exit_to_app: IconData,
     pub expand_less: IconData,
     pub expand_more: IconData,
+    pub info: IconData,
     pub open_in_new: IconData,
+    pub query_stats: IconData,
     pub radio_button_checked: IconData,
     pub radio_button_unchecked: IconData,
     pub redo: IconData,
-    pub submenu: IconData,
+    pub troubleshoot: IconData,
     pub undo: IconData,
+    pub warning: IconData,
     pub custom: Vec<CustomIconData>,
 }
 
@@ -87,6 +92,12 @@ impl Default for Icons {
             arrow_right: IconData::FontCodepoint(
                 "embedded://sickle_ui/fonts/MaterialIcons-Regular.ttf".into(),
                 '\u{E5DF}',
+                Color::WHITE,
+                12.,
+            ),
+            bug_report: IconData::FontCodepoint(
+                "embedded://sickle_ui/fonts/MaterialIcons-Regular.ttf".into(),
+                '\u{E868}',
                 Color::WHITE,
                 12.,
             ),
@@ -114,6 +125,12 @@ impl Default for Icons {
                 Color::WHITE,
                 12.,
             ),
+            error: IconData::FontCodepoint(
+                "embedded://sickle_ui/fonts/MaterialIcons-Regular.ttf".into(),
+                '\u{E000}',
+                Color::WHITE,
+                12.,
+            ),
             exit_to_app: IconData::FontCodepoint(
                 "embedded://sickle_ui/fonts/MaterialIcons-Regular.ttf".into(),
                 '\u{E879}',
@@ -132,9 +149,21 @@ impl Default for Icons {
                 Color::WHITE,
                 12.,
             ),
+            info: IconData::FontCodepoint(
+                "embedded://sickle_ui/fonts/MaterialIcons-Regular.ttf".into(),
+                '\u{E88E}',
+                Color::WHITE,
+                12.,
+            ),
             open_in_new: IconData::FontCodepoint(
                 "embedded://sickle_ui/fonts/MaterialIcons-Regular.ttf".into(),
                 '\u{E89E}',
+                Color::WHITE,
+                12.,
+            ),
+            query_stats: IconData::FontCodepoint(
+                "embedded://sickle_ui/fonts/MaterialIcons-Regular.ttf".into(),
+                '\u{E4FC}',
                 Color::WHITE,
                 12.,
             ),
@@ -150,9 +179,30 @@ impl Default for Icons {
                 Color::WHITE,
                 12.,
             ),
-            redo: IconData::Image("".into(), Color::WHITE),
-            submenu: IconData::Image("".into(), Color::WHITE),
-            undo: IconData::Image("".into(), Color::WHITE),
+            redo: IconData::FontCodepoint(
+                "embedded://sickle_ui/fonts/MaterialIcons-Regular.ttf".into(),
+                '\u{E15A}',
+                Color::WHITE,
+                12.,
+            ),
+            troubleshoot: IconData::FontCodepoint(
+                "embedded://sickle_ui/fonts/MaterialIcons-Regular.ttf".into(),
+                '\u{E1D2}',
+                Color::WHITE,
+                12.,
+            ),
+            undo: IconData::FontCodepoint(
+                "embedded://sickle_ui/fonts/MaterialIcons-Regular.ttf".into(),
+                '\u{E166}',
+                Color::WHITE,
+                12.,
+            ),
+            warning: IconData::FontCodepoint(
+                "embedded://sickle_ui/fonts/MaterialIcons-Regular.ttf".into(),
+                '\u{E002}',
+                Color::WHITE,
+                12.,
+            ),
             custom: Vec::new(),
         }
     }
