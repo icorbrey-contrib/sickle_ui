@@ -22,7 +22,7 @@ pub mod prelude {
         scroll_interaction::{ScrollAxis, Scrollable, ScrollableUpdate},
         theme::prelude::*,
         ui_builder::{UiBuilder, UiBuilderExt, UiContextRoot, UiRoot},
-        ui_commands::ManagePseudoStateExt,
+        ui_commands::{ManagePseudoStateExt, UpdateStatesExt, UpdateTextExt},
         ui_style::prelude::*,
         ui_utils::UiUtils,
         CardinalDirection,
