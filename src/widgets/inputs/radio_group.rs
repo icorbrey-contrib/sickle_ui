@@ -2,6 +2,7 @@ use bevy::{prelude::*, ui::FocusPolicy};
 
 use sickle_macros::UiContext;
 use sickle_ui_scaffold::prelude::*;
+
 use crate::widgets::layout::{
     container::UiContainerExt,
     label::{LabelConfig, UiLabelExt},
@@ -73,9 +74,12 @@ fn toggle_radio_button(
             };
 
             #[cfg(feature = "observable")]
-            commands.trigger_targets(RadioButtonChanged {
-                selected: radio_group.selected
-            }, radio_button.group);
+            commands.trigger_targets(
+                RadioButtonChanged {
+                    selected: radio_group.selected,
+                },
+                radio_button.group,
+            );
         }
     }
 }

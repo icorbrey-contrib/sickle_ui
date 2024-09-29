@@ -3,6 +3,7 @@ use std::ops::DerefMut;
 use bevy::{input::mouse::MouseScrollUnit, prelude::*, ui::RelativeCursorPosition};
 
 use sickle_ui_scaffold::{prelude::*, ui_commands::UpdateTextExt};
+
 use crate::widgets::layout::{
     container::UiContainerExt,
     label::{LabelConfig, UiLabelExt},
@@ -11,7 +12,7 @@ use crate::widgets::layout::{
 #[cfg(feature = "observable")]
 #[derive(Event, Copy, Clone, Debug)]
 pub struct SliderChanged {
-    pub ratio: f32
+    pub ratio: f32,
 }
 
 pub struct SliderPlugin;
@@ -75,9 +76,12 @@ fn update_slider_on_scroll(
         slider.ratio = (slider.ratio + fraction).clamp(0., 1.);
 
         #[cfg(feature = "observable")]
-        commands.trigger_targets(SliderChanged {
-            ratio: slider.ratio
-        }, slider_id);
+        commands.trigger_targets(
+            SliderChanged {
+                ratio: slider.ratio,
+            },
+            slider_id,
+        );
     }
 }
 
@@ -135,9 +139,12 @@ fn update_slider_on_drag(
         slider.ratio = (slider.ratio + fraction).clamp(0., 1.);
 
         #[cfg(feature = "observable")]
-        commands.trigger_targets(SliderChanged {
-            ratio: slider.ratio
-        }, handle.slider);
+        commands.trigger_targets(
+            SliderChanged {
+                ratio: slider.ratio,
+            },
+            handle.slider,
+        );
     }
 }
 
