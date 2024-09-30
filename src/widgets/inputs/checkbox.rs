@@ -1,6 +1,7 @@
 use bevy::{prelude::*, ui::FocusPolicy};
 
 use sickle_ui_scaffold::prelude::*;
+
 use crate::widgets::layout::{
     container::UiContainerExt,
     label::{LabelConfig, UiLabelExt},
@@ -9,7 +10,7 @@ use crate::widgets::layout::{
 #[cfg(feature = "observable")]
 #[derive(Event, Copy, Clone, Debug)]
 pub struct CheckboxChanged {
-    pub value: bool
+    pub value: bool,
 }
 
 pub struct CheckboxPlugin;
@@ -31,16 +32,19 @@ impl Plugin for CheckboxPlugin {
 
 fn toggle_checkbox(
     mut q_checkboxes: Query<(Entity, &mut Checkbox, &FluxInteraction), Changed<FluxInteraction>>,
-    mut commands: Commands
+    mut commands: Commands,
 ) {
     for (entity, mut checkbox, interaction) in &mut q_checkboxes {
         if *interaction == FluxInteraction::Released {
             checkbox.checked = !checkbox.checked;
 
             #[cfg(feature = "observable")]
-            commands.trigger_targets(CheckboxChanged {
-                value: checkbox.checked
-            }, entity);
+            commands.trigger_targets(
+                CheckboxChanged {
+                    value: checkbox.checked,
+                },
+                entity,
+            );
         }
     }
 }

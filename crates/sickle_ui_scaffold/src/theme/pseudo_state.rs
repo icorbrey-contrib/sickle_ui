@@ -259,6 +259,10 @@ impl PseudoStates {
         Self(Vec::new())
     }
 
+    pub fn single(state: PseudoState) -> Self {
+        Self(vec![state])
+    }
+
     pub fn has(&self, state: &PseudoState) -> bool {
         self.0.contains(state)
     }

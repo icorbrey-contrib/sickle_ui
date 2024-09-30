@@ -100,7 +100,7 @@ fn handle_click_or_touch(
 fn handle_option_press(
     q_options: Query<(&DropdownOption, &FluxInteraction), Changed<FluxInteraction>>,
     mut q_dropdown: Query<&mut Dropdown>,
-    mut commands: Commands
+    mut commands: Commands,
 ) {
     for (option, interaction) in &q_options {
         if *interaction == FluxInteraction::Released {
@@ -111,9 +111,12 @@ fn handle_option_press(
             dropdown.value = option.option.into();
 
             #[cfg(feature = "observable")]
-            commands.trigger_targets(DropdownChanged {
-                value: dropdown.value
-            }, option.dropdown);
+            commands.trigger_targets(
+                DropdownChanged {
+                    value: dropdown.value,
+                },
+                option.dropdown,
+            );
         }
     }
 }
