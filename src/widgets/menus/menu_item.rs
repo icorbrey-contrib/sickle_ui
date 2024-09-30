@@ -74,7 +74,7 @@ fn update_menu_item_on_shortcut_press(
     }
 }
 
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default)]
 pub struct MenuItemConfig {
     pub name: String,
     pub leading_icon: IconData,

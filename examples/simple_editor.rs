@@ -420,6 +420,44 @@ fn setup(mut commands: Commands) {
         )
         .insert(TargetCamera(main_camera));
 
+    let details_icon = IconData::Image("images/details_menu.png".into(), Color::WHITE);
+    let tiles_icon = IconData::Image("images/tiles_menu.png".into(), Color::WHITE);
+    let standard_menu_item = MenuItemConfig {
+        name: "Standard menu item".into(),
+        ..default()
+    };
+    let menu_item_with_leading = MenuItemConfig {
+        name: "Menu item with leading icon".into(),
+        leading_icon: details_icon.clone(),
+        ..default()
+    };
+    let menu_item_with_trailing = MenuItemConfig {
+        name: "Menu item with trailing icon".into(),
+        trailing_icon: tiles_icon.clone(),
+        ..default()
+    };
+    let menu_item_both_icons = MenuItemConfig {
+        name: "Menu item with both icons".into(),
+        leading_icon: details_icon.clone(),
+        trailing_icon: tiles_icon.clone(),
+        ..default()
+    };
+    let toggle_menu_item = ToggleMenuItemConfig {
+        name: "Toggle item".into(),
+        shortcut: vec![KeyCode::ControlLeft, KeyCode::KeyT].into(),
+        ..default()
+    };
+    let already_toggled_menu_item = ToggleMenuItemConfig {
+        name: "Already toggled item".into(),
+        initially_checked: true,
+        ..default()
+    };
+    let toggle_with_trailing = ToggleMenuItemConfig {
+        name: "Toggle item with trailing icon".into(),
+        trailing_icon: tiles_icon.clone(),
+        ..default()
+    };
+
     // Use the UI builder of the root entity with styling applied via commands
     commands.ui_builder(root_entity).column(|column| {
         column
@@ -468,60 +506,16 @@ fn setup(mut commands: Commands) {
                     ..default()
                 },
                 |menu| {
-                    menu.menu_item(MenuItemConfig {
-                        name: "Standard menu item".into(),
-                        ..default()
-                    });
-                    menu.menu_item(MenuItemConfig {
-                        name: "Menu item with leading icon".into(),
-                        leading_icon: IconData::Image(
-                            "embedded://sickle_ui/icons/details_menu.png".into(),
-                            Color::WHITE,
-                        ),
-                        ..default()
-                    });
-                    menu.menu_item(MenuItemConfig {
-                        name: "Menu item with trailing icon".into(),
-                        trailing_icon: IconData::Image(
-                            "embedded://sickle_ui/icons/tiles_menu.png".into(),
-                            Color::WHITE,
-                        ),
-                        ..default()
-                    });
-
-                    menu.menu_item(MenuItemConfig {
-                        name: "Menu item with both icons".into(),
-                        leading_icon: IconData::Image(
-                            "embedded://sickle_ui/icons/details_menu.png".into(),
-                            Color::WHITE,
-                        ),
-                        trailing_icon: IconData::Image(
-                            "embedded://sickle_ui/icons/tiles_menu.png".into(),
-                            Color::WHITE,
-                        ),
-                        ..default()
-                    });
+                    menu.menu_item(standard_menu_item.clone());
+                    menu.menu_item(menu_item_with_leading.clone());
+                    menu.menu_item(menu_item_with_trailing.clone());
+                    menu.menu_item(menu_item_both_icons.clone());
 
                     menu.separator();
 
-                    menu.toggle_menu_item(ToggleMenuItemConfig {
-                        name: "Toggle item".into(),
-                        shortcut: vec![KeyCode::ControlLeft, KeyCode::KeyT].into(),
-                        ..default()
-                    });
-                    menu.toggle_menu_item(ToggleMenuItemConfig {
-                        name: "Already toggled item".into(),
-                        initially_checked: true,
-                        ..default()
-                    });
-                    menu.toggle_menu_item(ToggleMenuItemConfig {
-                        name: "Toggle item with trailing icon".into(),
-                        trailing_icon: IconData::Image(
-                            "embedded://sickle_ui/icons/tiles_menu.png".into(),
-                            Color::WHITE,
-                        ),
-                        ..default()
-                    });
+                    menu.toggle_menu_item(toggle_menu_item.clone());
+                    menu.toggle_menu_item(already_toggled_menu_item.clone());
+                    menu.toggle_menu_item(toggle_with_trailing.clone());
 
                     menu.separator();
 
@@ -531,26 +525,9 @@ fn setup(mut commands: Commands) {
                             ..default()
                         },
                         |submenu| {
-                            submenu.menu_item(MenuItemConfig {
-                                name: "Standard menu item".into(),
-                                ..default()
-                            });
-                            submenu.menu_item(MenuItemConfig {
-                                name: "Menu item with leading icon".into(),
-                                leading_icon: IconData::Image(
-                                    "embedded://sickle_ui/icons/details_menu.png".into(),
-                                    Color::WHITE,
-                                ),
-                                ..default()
-                            });
-                            submenu.menu_item(MenuItemConfig {
-                                name: "Menu item with trailing icon".into(),
-                                trailing_icon: IconData::Image(
-                                    "embedded://sickle_ui/icons/tiles_menu.png".into(),
-                                    Color::WHITE,
-                                ),
-                                ..default()
-                            });
+                            submenu.menu_item(standard_menu_item.clone());
+                            submenu.menu_item(menu_item_with_leading.clone());
+                            submenu.menu_item(menu_item_with_trailing.clone());
                         },
                     );
                 },
@@ -563,60 +540,16 @@ fn setup(mut commands: Commands) {
                     ..default()
                 },
                 |menu| {
-                    menu.menu_item(MenuItemConfig {
-                        name: "Standard menu item".into(),
-                        ..default()
-                    });
-                    menu.menu_item(MenuItemConfig {
-                        name: "Menu item with leading icon".into(),
-                        leading_icon: IconData::Image(
-                            "embedded://sickle_ui/icons/details_menu.png".into(),
-                            Color::WHITE,
-                        ),
-                        ..default()
-                    });
-                    menu.menu_item(MenuItemConfig {
-                        name: "Menu item with trailing icon".into(),
-                        trailing_icon: IconData::Image(
-                            "embedded://sickle_ui/icons/tiles_menu.png".into(),
-                            Color::WHITE,
-                        ),
-                        ..default()
-                    });
-
-                    menu.menu_item(MenuItemConfig {
-                        name: "Menu item with both icons".into(),
-                        leading_icon: IconData::Image(
-                            "embedded://sickle_ui/icons/details_menu.png".into(),
-                            Color::WHITE,
-                        ),
-                        trailing_icon: IconData::Image(
-                            "embedded://sickle_ui/icons/tiles_menu.png".into(),
-                            Color::WHITE,
-                        ),
-                        ..default()
-                    });
+                    menu.menu_item(standard_menu_item.clone());
+                    menu.menu_item(menu_item_with_leading.clone());
+                    menu.menu_item(menu_item_with_trailing.clone());
+                    menu.menu_item(menu_item_both_icons.clone());
 
                     menu.separator();
 
-                    menu.toggle_menu_item(ToggleMenuItemConfig {
-                        name: "Toggle item".into(),
-                        shortcut: vec![KeyCode::ControlLeft, KeyCode::KeyT].into(),
-                        ..default()
-                    });
-                    menu.toggle_menu_item(ToggleMenuItemConfig {
-                        name: "Already toggled item".into(),
-                        initially_checked: true,
-                        ..default()
-                    });
-                    menu.toggle_menu_item(ToggleMenuItemConfig {
-                        name: "Toggle item with trailing icon".into(),
-                        trailing_icon: IconData::Image(
-                            "embedded://sickle_ui/icons/tiles_menu.png".into(),
-                            Color::WHITE,
-                        ),
-                        ..default()
-                    });
+                    menu.toggle_menu_item(toggle_menu_item.clone());
+                    menu.toggle_menu_item(already_toggled_menu_item.clone());
+                    menu.toggle_menu_item(toggle_with_trailing.clone());
 
                     menu.separator();
 
@@ -626,57 +559,20 @@ fn setup(mut commands: Commands) {
                             ..default()
                         },
                         |submenu| {
-                            submenu.menu_item(MenuItemConfig {
-                                name: "Standard menu item".into(),
-                                ..default()
-                            });
-                            submenu.menu_item(MenuItemConfig {
-                                name: "Menu item with leading icon".into(),
-                                leading_icon: IconData::Image(
-                                    "embedded://sickle_ui/icons/details_menu.png".into(),
-                                    Color::WHITE,
-                                ),
-                                ..default()
-                            });
-                            submenu.menu_item(MenuItemConfig {
-                                name: "Menu item with trailing icon".into(),
-                                trailing_icon: IconData::Image(
-                                    "embedded://sickle_ui/icons/tiles_menu.png".into(),
-                                    Color::WHITE,
-                                ),
-                                ..default()
-                            });
+                            submenu.menu_item(standard_menu_item.clone());
+                            submenu.menu_item(menu_item_with_leading.clone());
+                            submenu.menu_item(menu_item_with_trailing.clone());
 
                             submenu.submenu(
                                 SubmenuConfig {
                                     name: "Submenu with lead icon".into(),
-                                    leading_icon: IconData::Image(
-                                        "embedded://sickle_ui/icons/details_menu.png".into(),
-                                        Color::WHITE,
-                                    ),
+                                    leading_icon: details_icon.clone(),
                                     ..default()
                                 },
                                 |submenu| {
-                                    submenu.menu_item(MenuItemConfig {
-                                        name: "Standard menu item".into(),
-                                        ..default()
-                                    });
-                                    submenu.menu_item(MenuItemConfig {
-                                        name: "Menu item with leading icon".into(),
-                                        leading_icon: IconData::Image(
-                                            "embedded://sickle_ui/icons/details_menu.png".into(),
-                                            Color::WHITE,
-                                        ),
-                                        ..default()
-                                    });
-                                    submenu.menu_item(MenuItemConfig {
-                                        name: "Menu item with trailing icon".into(),
-                                        trailing_icon: IconData::Image(
-                                            "embedded://sickle_ui/icons/tiles_menu.png".into(),
-                                            Color::WHITE,
-                                        ),
-                                        ..default()
-                                    });
+                                    submenu.menu_item(standard_menu_item.clone());
+                                    submenu.menu_item(menu_item_with_leading.clone());
+                                    submenu.menu_item(menu_item_with_trailing.clone());
                                 },
                             );
                         },

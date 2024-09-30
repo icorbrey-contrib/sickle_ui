@@ -9,6 +9,7 @@ use sickle_ui_scaffold::prelude::*;
 use super::container::UiContainerExt;
 
 // TODO: implement click-to-scroll
+// TODO: Fix horizontal scroll performance issue
 pub struct ScrollViewPlugin;
 
 impl Plugin for ScrollViewPlugin {
