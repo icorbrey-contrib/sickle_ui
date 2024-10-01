@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use sickle_ui_scaffold::prelude::*;
+use sickle_ui_scaffold::{prelude::*, theme::icons::Icons};
 
 use crate::widgets::{
     layout::{
@@ -317,10 +317,7 @@ impl UiHierarchyExt for UiBuilder<'_, Entity> {
                                     refresh_button = row
                                         .menu_item(MenuItemConfig {
                                             name: "Refresh".into(),
-                                            trailing_icon: IconData::Image(
-                                                "embedded://sickle_ui/icons/redo_white.png".into(),
-                                                Color::WHITE,
-                                            ),
+                                            trailing_icon: Icons::default().refresh,
                                             ..default()
                                         })
                                         .id();

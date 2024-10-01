@@ -79,6 +79,8 @@ pub struct Icons {
     pub radio_button_checked: IconData,
     pub radio_button_unchecked: IconData,
     pub redo: IconData,
+    pub refresh: IconData,
+    pub sync: IconData,
     pub troubleshoot: IconData,
     pub undo: IconData,
     pub warning: IconData,
@@ -182,6 +184,18 @@ impl Default for Icons {
             redo: IconData::FontCodepoint(
                 "embedded://sickle_ui/fonts/MaterialIcons-Regular.ttf".into(),
                 '\u{E15A}',
+                Color::WHITE,
+                12.,
+            ),
+            refresh: IconData::FontCodepoint(
+                "embedded://sickle_ui/fonts/MaterialIcons-Regular.ttf".into(),
+                '\u{E5D5}',
+                Color::WHITE,
+                12.,
+            ),
+            sync: IconData::FontCodepoint(
+                "embedded://sickle_ui/fonts/MaterialIcons-Regular.ttf".into(),
+                '\u{E627}',
                 Color::WHITE,
                 12.,
             ),
